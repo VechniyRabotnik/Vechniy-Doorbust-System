@@ -1,30 +1,40 @@
 # [Vechniy] DoorBust System
-[Vechniy] DoorBust System
 
-## Steam Workshop
+### 🌟 Available on Steam Workshop  
 This addon is available on the Workshop [here](https://steamcommunity.com/sharedfiles/filedetails/?id=3395048958)!
 
-## Info/Информация
+---
 
-# English
-I will be glad to receive feedback about my addon. Also, if you want to suggest an idea and stuff, then contact me in my Discord Server. (If you want to use this system on your server, please also contact me for feedback on how the add-on works, as well as to inform me that you are using this system)
+## 📖 Info / Информация
 
-ATTENTION! DARK RP OR ITS ANALOGUES ARE REQUIRED FOR WORK. IF YOU ARE USING THE ADDON ON SERVER, DO NOT FORGET TO UPDATE AllowedJobs IN config.lua
+### 🇺🇸 English
 
-This system implements a door-knocking system for servers in the SCP Foundation universe. Thanks to this modification, the player can knock down the door on command (If the profession check is passed). Also, a convenient config has been made for the servers, which allows you to change the add-on as needed, and there is also a SWEP-Tool that allows you to create a team for other doors that are not knocked out by default by the team.
+I would be glad to receive feedback about my addon. If you have ideas or suggestions, feel free to contact me on my Discord Server.  
+If you want to use this system on your server, please also reach out to me for feedback on how the addon works and to notify me that you are using it.
 
-The addon has translations into : Russian, English, French, German
+**ATTENTION!** **Dark RP** or its equivalents are **REQUIRED** for proper operation.  
+**IMPORTANT:** If you are using this addon on your server, don’t forget to update the `AllowedJobs` in `config.lua`.
 
-# Russian
+This system implements a door-busting feature for SCP Foundation servers. Thanks to this modification, players can break down doors on command (if they pass the profession check).  
+A user-friendly config allows server owners to customize the addon as needed. Additionally, there is a SWEP-Tool that enables creating team-based door-breaking actions for doors not broken by default.
 
-Я буду рад получить обратную связь о моем дополнении. Кроме того, если вы хотите предложить идею и прочее, то свяжитесь со мной через мой Discord Сервер. (Если вы хотите  использовать эту систему на своем сервере, то также свяжитесь со мной для получения отзывов о работе дополнения, а также для информации, что вы используете данную систему)
+The addon supports multiple languages: **Russian, English, French, German**.
 
-ВНИМАНИЕ! ДЛЯ РАБОТЫ ТРЕБУЕТСЯ DARK RP ИЛИ ЕГО АНАЛОГИ. ЕСЛИ ВЫ ИСПОЛЬЗУЕТЕ АДДОН НА СЕРВЕРЕ, НЕ ЗАБУДЬТЕ ОБНОВИТЬ AllowedJobs В config.lua
+---
 
-Данная система реализует систему выбивания дверей для серверов в вселенной SCP Foundation. Благодаря данной модификации игрок может выбить дверь по команде (Если пройдена проверка на профессию). Также, для серверов сделан удобный config, который позволяет изменять дополнение по нужде и также существует SWEP-Tool, который позволяет создать работу команды на другие двери, которые по дефолту не выбиваются командой.
+### 🇷🇺 Русский
 
-Аддон имеет переводы на : Русский, Английский, Французский, Немецкий
+Я буду рад получить обратную связь о моем дополнении. Если у вас есть идеи или предложения, свяжитесь со мной через мой Discord сервер.  
+Если вы хотите использовать эту систему на своем сервере, также сообщите мне об этом, чтобы я мог дать отзыв о работе дополнения и знать, что вы его используете.
 
-## Discord for help or questions / Дискорд для помощи и вопросов
-Link in profile ❤️
+**ВНИМАНИЕ!** Для работы требуется **Dark RP** или его аналоги.  
+**ВАЖНО:** Если вы используете этот аддон на сервере, не забудьте обновить `AllowedJobs` в `config.lua`.
 
+Данная система реализует механизм выбивания дверей для серверов в вселенной SCP Foundation. Благодаря этой модификации, игроки могут разбивать двери по команде (если пройдена проверка на профессию).  
+Для серверов предусмотрен удобный конфиг, позволяющий изменять настройки по необходимости, а также есть SWEP-Tool, который позволяет создавать команды для разбивания дверей, не входящих по умолчанию в список.
+
+Поддерживаются переводы на: **Русский, Английский, Французский, Немецкий**.
+
+---
+
+## 💬 Discord для помощи или вопросов / Link in profile ❤️
