@@ -1,80 +1,80 @@
 
-include("config.lua")
+util.AddNetworkString("DoorBust_DoBust")
+util.AddNetworkString("DoorBust_Chat")
 
-if SERVER then
-    AddCSLuaFile("config.lua")
+local function SendChat(ply, color, text)
+    net.Start("DoorBust_Chat")
+        net.WriteUInt(color.r, 8)
+        net.WriteUInt(color.g, 8)
+        net.WriteUInt(color.b, 8)
+        net.WriteString(text)
+    net.Send(ply)
 end
 
-util.AddNetworkString("DoorBust_DoBust")
-util.AddNetworkString("DoorBust_SaveMarkers")
 
-local GetActive = false
+hook.Add("PlayerSay", "DoorBust", function(ply, text)
+    if text ~= "/doorbust" then return end
+    local allowedJobs = {
+        [TEAM_SCP999] = true, 
+    }
+    
+    local sid64 = ply:SteamID64()
+    local checkName  = "DoorBust_check_"  .. sid64
+    local finishName = "DoorBust_finish_" .. sid64
+    if timer.Exists(finishName) then
+        return "" 
+    end
 
-local function DoorBust(ply, text)
-    if text == DoorBustConfig.Command then
-        if not GetActive then
-            GetActive = true
-            
-            if DoorBustConfig.AllowedJobs[ply:Team()] then
-                local plyPos = ply:GetPos()
-                
-                local tr = ply:GetEyeTrace()
-                if IsValid(tr.Entity) and tr.Entity:GetClass() == "func_door" then
-                    local distance = plyPos:Distance(tr.Entity:GetPos())
-                    
-                    if distance > 90 then
-                        ply:ChatPrint(DoorBustConfig.Texts[DoorBustConfig.Language].TooFar)
-                        net.Start("DoorBust_DoBust")
-                        net.WriteBool(false)
-                        net.Send(ply)
-                        GetActive = false
-                        return
-                    end
-                    
-                    local timerDuration = 5
-                    
-                    net.Start("DoorBust_DoBust")
-                    net.WriteBool(true)
-                    net.Send(ply)
-                    
-                    local entPos = ply:GetPos()
-                    local doorPos = tr.Entity:GetPos()
-                    
-                    if entPos:Distance(doorPos) > 90 then
-                        ply:ChatPrint(DoorBustConfig.Texts[DoorBustConfig.Language].TooFar)
-                        net.Start("DoorBust_DoBust")
-                        net.WriteBool(false)
-                        net.Send(ply)
-                        GetActive = false
-                        return
-                    end
-                    
-                    timer.Simple(timerDuration, function()
-                        tr.Entity:Fire("Open")
-                        
-                        ply:ChatPrint(DoorBustConfig.Texts[DoorBustConfig.Language].DoorBroken)
-                        
-                        hook.Call( "OnDoorBroken", "DoorbustListening", ply)
-                        
-                        net.Start("DoorBust_DoBust")
-                        net.WriteBool(false)
-                        net.Send(ply)
-                        
-                        GetActive = false
-                    end)
-                else
-                    ply:ChatPrint(DoorBustConfig.Texts[DoorBustConfig.Language].NotAllowed)
-                end
-            else
-                ply:ChatPrint(DoorBustConfig.Texts[DoorBustConfig.Language].NotAllowed)
-            end
-        end
+    if not allowedJobs[ply:Team()] then
+        SendChat(ply, Color(255,100,100), "Вам запрещено использовать /doorbust.")
         return ""
     end
-end
 
-hook.Add("PlayerSay", "DoorBust", DoorBust)
+    local tr = ply:GetEyeTrace()
+    if not (IsValid(tr.Entity) and tr.Entity:GetClass() == "func_door") then
+        SendChat(ply, Color(255,100,100), "Нужно смотреть на дверь.")
+        return ""
+    end
 
-hook.Add("OnDoorBroken", "DoorbustListening", function(ply)
+    if ply:GetPos():Distance(tr.Entity:GetPos()) > 90 then
+        SendChat(ply, Color(255,100,100), "Вы слишком далеко от двери.")
+        return ""
+    end
 
+    net.Start("DoorBust_DoBust")
+        net.WriteBool(true)
+    net.Send(ply)
+    SendChat(ply, Color(100,200,100), "Начинаем взлом двери…")
+
+    local duration = 5 
+
+    timer.Create(checkName, 0.1, 0, function()
+        if not IsValid(ply) or not IsValid(tr.Entity) then
+            if IsValid(ply) then
+                SendChat(ply, Color(255,100,100), "Дверь пропала...")
+                net.Start("DoorBust_DoBust") net.WriteBool(false) net.Send(ply)
+            end
+            timer.Remove(checkName)
+            timer.Remove(finishName)
+            return
+        end
+        if ply:GetPos():Distance(tr.Entity:GetPos()) > 90 then
+            SendChat(ply, Color(255,100,100), "Вы слишком далеко от двери.")
+            net.Start("DoorBust_DoBust") net.WriteBool(false) net.Send(ply)
+            timer.Remove(checkName)
+            timer.Remove(finishName)
+        end
+    end)
+
+    timer.Create(finishName, duration, 1, function()
+        if IsValid(ply) and IsValid(tr.Entity) then
+            tr.Entity:Fire("Open")
+            SendChat(ply, Color(100,200,100), "Дверь успешно сломана!")
+            net.Start("DoorBust_DoBust") net.WriteBool(false) net.Send(ply)
+        end
+        timer.Remove(checkName)
+        timer.Remove(finishName)
+    end)
+
+    return ""
 end)
